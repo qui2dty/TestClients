@@ -235,16 +235,20 @@ public class GameManager : MonoSingleton<GameManager>
         towers.Last().towerId = towerId;
     }
 
-    public void OnGameEnd()
-    {
-        isGameStart = false;
-        monsters.ForEach(obj => obj.StopMonster());
-        towers.ForEach(obj => obj.StopTower());
-        monsters.Clear();
-        towers.Clear();
-        StopAllCoroutines();
-        StartCoroutine(OnSceneChange());
-    }
+public void OnGameEnd()
+{
+    isGameStart = false;
+    monsters.ForEach(obj => obj.StopMonster());
+    towers.ForEach(obj => obj.StopTower());
+    monsters.Clear();
+    towers.Clear();
+    StopAllCoroutines();
+    StartCoroutine(OnSceneChange());
+    
+    GamePacket packet = new GamePacket();
+    packet.GameEndRequest = new C2SGameEndRequest();
+    SocketManager.instance.Send(packet);
+}
 
     IEnumerator OnSceneChange()
     {

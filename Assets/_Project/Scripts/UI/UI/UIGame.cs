@@ -103,9 +103,11 @@ public class UIGame : UIBase
 
     public void OnClickAddTower()
     {
-        if (GameManager.instance.gold >= DataManager.instance.GetData<TowerDataSO>("TOW00001").cost)
+        int towerCost = GameManager.instance.initialGameState.TowerCost;
+
+        if (GameManager.instance.gold >= towerCost)
         {
-            GameManager.instance.gold -= DataManager.instance.GetData<TowerDataSO>("TOW00001").cost;
+            GameManager.instance.gold -= towerCost;
             var tower = GameManager.instance.AddRandomTower();
             GamePacket packet = new GamePacket();
             packet.TowerPurchaseRequest = new C2STowerPurchaseRequest() { X = tower.transform.localPosition.x, Y = tower.transform.localPosition.y };
