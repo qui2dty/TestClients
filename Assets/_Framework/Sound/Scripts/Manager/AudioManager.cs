@@ -22,7 +22,7 @@ public class AudioManager : MonoSingleton<AudioManager>
             audioPool.Add(key, ResourceManager.instance.LoadAsset<AudioClip>("Sound/" + key));
         source.clip = audioPool[key];
         source.loop = isLoop;
-        source.Play();
+        //source.Play(); //소리 OFF
     }
 
     public void PlayOneShot(string key)
